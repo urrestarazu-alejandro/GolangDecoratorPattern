@@ -4,6 +4,9 @@ import (
 	"time"
 )
 
+/*
+	Concrete decorator
+*/
 type DayOfWeek struct {
 	workDay WorkDay
 }
@@ -14,9 +17,7 @@ func NewDayOfWeek(workDay WorkDay) *DayOfWeek {
 
 func (d *DayOfWeek) IsWorkingDay() bool {
 	switch d.workDay.GetDate().Weekday() {
-	case time.Sunday:
-		return false
-	case time.Saturday:
+	case time.Sunday, time.Saturday:
 		return false
 	default:
 		return d.workDay.IsWorkingDay()

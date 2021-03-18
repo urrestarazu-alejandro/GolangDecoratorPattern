@@ -1,9 +1,12 @@
-package model
+package decorator
 
 import (
 	"time"
 )
 
+/*
+	Component
+*/
 type Day struct {
 	date       time.Time
 	workingDay bool

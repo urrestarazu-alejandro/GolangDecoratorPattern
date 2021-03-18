@@ -2,18 +2,18 @@ package main
 
 import (
 	"GolangDecoratorPattern/decorator"
-	"GolangDecoratorPattern/model"
 	"fmt"
 	"time"
 )
 
 func main() {
+	fmt.Println("Go!")
+
 	initiallDate := time.Now()
 
 	for i := 0; i < 12; i++ {
 		holiday := getDayWhitDecorators(initiallDate, i)
-
-		_, _ = show(holiday)
+		_ , _ = show(holiday)
 	}
 
 }
@@ -23,11 +23,29 @@ func show(holiday *decorator.Holiday) (int, error) {
 	if !holiday.IsWorkingDay() {
 		working = "X"
 	}
-	return fmt.Printf("|\t %v | %v |\n", holiday.GetDate().Format("Mon | _2/01/2006"), working)
+	return fmt.Printf("| %v | %v | %v |\n",
+		convertWeekday(holiday.GetDate().Weekday()),
+		holiday.GetDate().Format("_2/01/2006"), working)
+}
+
+
+
+func convertWeekday(w time.Weekday)  string {
+	var weekdays = [...]string{
+		"Dom",
+		"Lun",
+		"Mar",
+		"Mie",
+		"Jue",
+		"Vie",
+		"Sab",
+	}
+
+	return weekdays[w]
 }
 
 func getDayWhitDecorators(initial time.Time, days int) *decorator.Holiday {
-	day := model.NewDay(initial.AddDate(0, 0, days), true)
+	day := decorator.NewDay(initial.AddDate(0, 0, days), true)
 
 	dayOfWeek := decorator.NewDayOfWeek(day)
 
